@@ -1,0 +1,45 @@
+trigger:
+- main
+
+pool: SelfHosted
+
+resources:
+- repo: self
+
+variables:
+  acrName: 'acruse2cclakspoc'
+  acrUrl: '$(acrName).azurecr.io'
+  imageNameTag: 'akvdotnet:v$(Build.BuildId)'
+
+steps:
+  - task: AzureCLI@2
+    name: BuildTag
+    displayName: Build and tag akvdotnet image
+    inputs:
+        azureSubscription: MngEnvMCAP912772-Subsc-1
+        workingDirectory: akvdotnet
+        addSpnToEnvironment: false
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Echo: docker build of $(acrUrl)/$(imageNameTag)"
+          docker build -f Dockerfile -t $(acrUrl)/$(imageNameTag) .
+          # echo
+          # echo "sudo docker image ls"
+          # sudo docker image ls
+
+  - task: AzureCLI@2
+    name: PushToAcr
+    displayName: Push akvdotnet image to ACR
+    inputs:
+        azureSubscription: MngEnvMCAP912772-Subsc-1
+        workingDirectory: akvdotnet
+        addSpnToEnvironment: false
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Echo: az acr login to $(acrName)"
+          az acr login -n $(acrName)
+          echo
+          echo "Echo: docker push $(acrUrl)/$(imageNameTag)"
+          docker push $(acrUrl)/$(imageNameTag)
