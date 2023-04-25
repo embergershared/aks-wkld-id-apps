@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "akvdotnet": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
