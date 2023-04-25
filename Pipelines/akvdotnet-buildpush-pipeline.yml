@@ -16,7 +16,7 @@ steps:
     name: BuildTag
     displayName: Build and tag akvdotnet image
     inputs:
-        azureSubscription: MngEnvMCAP912772-Subsc-1
+        azureSubscription: MngEnv-Sub-1
         workingDirectory: akvdotnet
         addSpnToEnvironment: false
         scriptType: 'bash'
@@ -24,15 +24,15 @@ steps:
         inlineScript: |
           echo "Echo: docker build of $(acrUrl)/$(imageNameTag)"
           docker build -f Dockerfile -t $(acrUrl)/$(imageNameTag) .
-          # echo
-          # echo "sudo docker image ls"
-          # sudo docker image ls
+          echo
+          echo "Echo: docker image ls"
+          sudo docker image ls
 
   - task: AzureCLI@2
     name: PushToAcr
     displayName: Push akvdotnet image to ACR
     inputs:
-        azureSubscription: MngEnvMCAP912772-Subsc-1
+        azureSubscription: MngEnv-Sub-1
         workingDirectory: akvdotnet
         addSpnToEnvironment: false
         scriptType: 'bash'
