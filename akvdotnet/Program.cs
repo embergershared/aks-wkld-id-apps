@@ -35,7 +35,7 @@ namespace akvdotnet
 
         // <getsecret>
         var keyvaultSecret = client.GetSecret(secretName).Value;
-        Console.WriteLine("Your secret is: " + keyvaultSecret.Value);
+        Console.WriteLine("Your secret is = " + keyvaultSecret.Value);
 
         // sleep and retry periodically
         Thread.Sleep(600000);
