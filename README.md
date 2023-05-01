@@ -1,4 +1,4 @@
-# AKS Workload Identity Proof Of Concept - Kubernetes repo
+# AKS Workload Identity Proof Of Concept - App repo
 
 ## Overview
 
